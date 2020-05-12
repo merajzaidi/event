@@ -11,14 +11,16 @@ from django.contrib.auth import authenticate, login
 def index(request):
     sliders = slider.objects.all()
     n = len(sliders)
-    city = postrequest.objects.values('city')
+    cityy = city.objects.values('location','id')
+    print(cityy)
     if request.method == 'POST':
-        cit = request.POST.get('location','')
-        content = postrequest.objects.filter(city=cit)
-        all = {'sliders': sliders , 'city': city, 'content': content }
+        cit = request.POST.get('locationn')
+        print(cit)
+        content = postrequest.objects.filter(place=cit)
+        all = {'sliders': sliders , 'cityy': cityy, 'content': content }
         return render(request, 'main/index.html', all)
     else:
-        all = {'sliders': sliders, 'city': city}
+        all = {'sliders': sliders, 'cityy': cityy}
     return render(request,'main/index.html', all)
 
 def signup(request):

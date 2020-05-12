@@ -8,11 +8,14 @@ class city(models.Model):
     #id = models.UUIDField(primary_key=True,default = uuid.uuid4())
     location = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.location
+
 class postrequest(models.Model):
     post_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     address = models.CharField(max_length=70, default="")
-    city = models.ForeignKey('city', on_delete=models.SET_NULL,null=True)
+    place = models.ForeignKey('city', on_delete=models.SET_NULL,null=True)
     #city = models.CharField(max_length=30)
     date = models.DateField(max_length=70, default="")
     time = models.TimeField(max_length=70, default="")
