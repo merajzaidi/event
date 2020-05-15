@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import slider , postrequest ,city
+from .models import slider , postrequest ,city , Shaiyar
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -39,20 +39,34 @@ def post(request):
         title = request.POST.get('title', '')
         category = request.POST.get('category', '')
         address = request.POST.get('address', '')
-        cityo = request.POST.get('city', '')
+        cityo = request.POST.get('cityyy', '')
         date = request.POST.get('date', '')
         time = request.POST.get('time', '')
         poster = request.POST.get('poster', '')
         desc = request.POST.get('description','')
+        sname = request.POST.get('sname')
+        imag = request.POST.get('si')
         posts = postrequest(title=title, category=category, address=address, date=date, time=time, poster=poster, desc=desc, verification=False)
-        #instance = posts.save(commit=False)
         posts.author = request.user
-        posts.city = city.objects.get(location=cityo)
+        posts.place = city.objects.get(location=cityo)
         posts.save()
+        if(posts.category=='mehfil'):
+            qwe = Shaiyar(Shaiyarname=sname, photo=imag)
+            qwe.post = postrequest.objects.get(post_id=posts.post_id)
+            qwe.save()
+
     return render(request, 'main/post.html')
 class postevent(LoginRequiredMixin, TemplateView):
     template_name = 'post.html'
 
+def postmore(request):
+    if request.method == "POST":
+        sname = request.POST.get('sname')
+        imag = request.POST.get('si')
+        qwe = Shaiyar(Shaiyarname=sname, photo=imag)
+        qwe.post = postrequest.objects.get(post_id=19)
+        qwe.save()
+    return render(request, 'main/postmore.html')
 def links(request):
     return HttpResponse("This is links")
 

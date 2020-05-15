@@ -1,0 +1,18 @@
+{% extends 'main/basic.html' %}
+{% block body %}
+<div class="container my-4">
+<h1>Enter More Details</h1>
+    <form method="post">
+    {% csrf_token %}
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-md-6">
+      <input type="text" class="form-control" id="inputEmail3" name="sname">
+    </div>
+    <label for="exampleFormControlFile1">Image</label>
+    <input type="file" class="form-control-file col-md-2" id="exampleFormControlFile1" name="si">
+  </div>
+        <button type="submit" class="btn btn-primary">submit</button>
+    </form>
+</div>
+{% endblock %}

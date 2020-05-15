@@ -2,7 +2,7 @@
 {% block body %}
 <div class="container my-4">
     <h3 class="my-2">Post your Event</h3>
-<form action="#" method="post">
+<form action="#" method="post" name="myForm">
     {% csrf_token %}
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -11,7 +11,7 @@
     </div>
     <div class="form-group col-md-6">
         <label for="category">Category</label>
-    <select class="custom-select" name = "category" required>
+    <select class="custom-select" name = "category" onchange="validation()" required>
       <option value="">Select Category</option>
       <option value="majlis">Majlis</option>
       <option value="mehfil">Mehfil</option>
@@ -26,7 +26,7 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity" name = "city">
+      <input type="text" class="form-control" id="inputCity" name = "cityyy">
     </div>
     <div class="form-group col-md-4">
       <label for="inputdate">date</label>
@@ -45,8 +45,25 @@
     <label for="exampleFormControlFile1">Upload Any poster</label>
     <input type="file" class="form-control-file" id="exampleFormControlFile1" name="poster">
   </div>
-
+  <span id="divpr" class="divpr"><br></span>
   <button type="submit" class="btn btn-primary">Load More</button>
 </form>
     </div>
+{% endblock %}
+{% block js %}
+<script>
+function validation(){
+  var x = document.forms["myForm"]["category"].value;
+  console.log(x);
+  if (x == "mehfil"){
+  var datat = '<div class="form-group row"><label for="inputEmail3" class="col-sm-2 col-form-label">Name</label><div class="col-md-6"><input type="text" class="form-control" id="inputEmail3" name="sname"></div><label for="exampleFormControlFile1">Image</label><input type="file" class="form-control-file col-md-2" id="exampleFormControlFile1" name="si"><button type="button" class="btn btn-primary" id="add" onclick="added()">+</button></div><span id="divp"></span>';
+      document.getElementById('divpr').innerHTML = datat ;
+  }
+}
+function added(){
+var data = '<div class="form-group row"><label for="inputEmail3" class="col-sm-2 col-form-label">Name</label><div class="col-md-6"><input type="text" class="form-control" id="inputEmail3" name="sname"></div><label for="exampleFormControlFile1">Image</label><input type="file" class="form-control-file col-md-2" id="exampleFormControlFile1" name="si"><button type="button" class="btn btn-primary" id="add" onclick="added()">+</button></div>';
+      console.log(document.getElementById('divp').innerHTML);
+      document.getElementById('divp').innerHTML = document.getElementById('divp').innerHTML + data ;
+}
+</script>
 {% endblock %}

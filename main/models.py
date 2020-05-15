@@ -29,6 +29,7 @@ class postrequest(models.Model):
         ('others',"Others"),
     )
     category = models.CharField(max_length=50, default='others',choices=cat_choice)
+
     def __str__(self):
         return self.title
 
@@ -47,3 +48,10 @@ class postrequest(models.Model):
         """String for representing the Model object."""
         return f'{self.post_id} ({self.title})'
 
+class Shaiyar(models.Model):
+    Shaiyarname = models.CharField(max_length=50)
+    photo = models.ImageField(upload_to='main/slider')
+    post = models.ForeignKey(postrequest, default=None, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.post.title
