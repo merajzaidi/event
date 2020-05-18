@@ -9,4 +9,6 @@ urlpatterns = [
     path('links', views.links, name='links'),
     path('places', views.places, name='places'),
     path('maulana', views.maulana, name='maulana'),
+    path('contact', views.contactt, name='contact'),
+    path('volunteer', views.volunteer, name='volunteer'),
 ]

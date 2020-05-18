@@ -1,13 +1,14 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from .models import slider , postrequest ,city , Shaiyar
+from django.http import HttpResponse,HttpResponseRedirect
+from .models import slider , postrequest ,city , Shaiyar, contact
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
-# Create your views here.
+from .forms import Nameform,details
+from .decorators import unauthenticated_user, allowed_users
 def index(request):
     sliders = slider.objects.all()
     n = len(sliders)
@@ -15,7 +16,6 @@ def index(request):
     print(cityy)
     if request.method == 'POST':
         cit = request.POST.get('locationn')
-        print(cit)
         content = postrequest.objects.filter(place=cit)
         all = {'sliders': sliders , 'cityy': cityy, 'content': content }
         return render(request, 'main/index.html', all)
@@ -33,8 +33,10 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-@login_required(login_url='/events/accounts/login/')
+#@login_required(login_url='/events/accounts/login/')
+@unauthenticated_user
 def post(request):
+    form = details()
     if request.method=="POST":
         title = request.POST.get('title', '')
         category = request.POST.get('category', '')
@@ -44,18 +46,27 @@ def post(request):
         time = request.POST.get('time', '')
         poster = request.POST.get('poster', '')
         desc = request.POST.get('description','')
-        sname = request.POST.get('sname')
-        imag = request.POST.get('si')
-        posts = postrequest(title=title, category=category, address=address, date=date, time=time, poster=poster, desc=desc, verification=False)
+        attend = request.POST.get('attendences','')
+        organisers = request.POST.get('organiser','')
+        phone_no = request.POST.get('phone_no','')
+        posts = postrequest(title=title, category=category, address=address, date=date, time=time, poster=poster, desc=desc, verification=False, attendences = attend, organiser = organisers,phone_no=phone_no)
         posts.author = request.user
         posts.place = city.objects.get(location=cityo)
         posts.save()
+        i = 1
         if(posts.category=='mehfil'):
-            qwe = Shaiyar(Shaiyarname=sname, photo=imag)
-            qwe.post = postrequest.objects.get(post_id=posts.post_id)
-            qwe.save()
+            sname = request.POST.get('sname'+str(i), '')
+            imag = request.POST.get('si'+str(i), '')
+            while(sname != ''):
+                qwe = Shaiyar(Shaiyarname=sname, photo=imag)
+                qwe.post = postrequest.objects.get(post_id=posts.post_id)
+                qwe.save()
+                i=i+1
+                sname = request.POST.get('sname' + str(i), '')
+                imag = request.POST.get('si' + str(i), '')
 
-    return render(request, 'main/post.html')
+
+    return render(request, 'main/post.html',{'form':form})
 class postevent(LoginRequiredMixin, TemplateView):
     template_name = 'post.html'
 
@@ -75,3 +86,26 @@ def places(request):
 
 def maulana(request):
     return HttpResponse("This is maulana")
+
+def contactt(request):
+    if request.method == 'POST':
+        form = Nameform(request.POST)
+        print(form)
+        if form.is_valid():
+            obj = contact()
+            obj.contacter = form.cleaned_data['your_name']
+            obj.save()
+            return HttpResponse("Submit")
+    else:
+        form=Nameform()
+    return render(request, 'main/name.html',{'form':form})
+
+@unauthenticated_user
+@allowed_users(allowed_roles=['volunteer'])
+def volunteer(request):
+    majlis = postrequest.objects.filter(category='majlis')
+    mehfil = postrequest.objects.filter(category='mehfil')
+    others = postrequest.objects.filter(category='others')
+    unverified = postrequest.objects.filter(verification='False')
+    all = {'majlis': majlis, 'mehfil':mehfil, 'others':others, 'unverified': unverified}
+    return render(request, 'main/volunteer.html', all)

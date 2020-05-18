@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models ,transaction
 from django.contrib.auth.models import User
 # Create your models here.
 class slider(models.Model):
@@ -16,13 +16,16 @@ class postrequest(models.Model):
     title = models.CharField(max_length=50)
     address = models.CharField(max_length=70, default="")
     place = models.ForeignKey('city', on_delete=models.SET_NULL,null=True)
-    #city = models.CharField(max_length=30)
+    attendences = models.CharField(max_length=50, default="")
     date = models.DateField(max_length=70, default="")
     time = models.TimeField(max_length=70, default="")
-    poster = models.ImageField(upload_to='main/slider')
+    poster = models.ImageField(upload_to='main/slider',default='')
     desc = models.CharField(max_length=300)
-    verification = models.BooleanField()
+    verification = models.BooleanField(default=False)
     author = models.ForeignKey(User,default=None, on_delete=models.SET_NULL,null=True)
+    phone_no = models.CharField(default='',max_length=10)
+    organiser = models.CharField(max_length=50,default="")
+    taam = models.BooleanField(default=False)
     cat_choice = (
         ('mehfil', "Mehfil"),
         ('majlis', "Majlis"),
@@ -33,25 +36,27 @@ class postrequest(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        if self.verification:
-            try:
-                temp = postrequest.objects.get(verification=True)
-                if self != temp:
-                    temp.verification = False
-                    temp.save()
-            except postrequest.DoesNotExist:
-                pass
-        super(postrequest, self).save(*args, **kwargs)
-
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.post_id} ({self.title})'
 
 class Shaiyar(models.Model):
     Shaiyarname = models.CharField(max_length=50)
-    photo = models.ImageField(upload_to='main/slider')
+    photo = models.ImageField(upload_to='main/slider', default='')
     post = models.ForeignKey(postrequest, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.post.title
+
+class mehfildetail(models.Model):
+    nizamat = models.CharField(max_length=50)
+    nizamimage = models.ImageField(upload_to='main/slider',default = '')
+    sadarat = models.CharField(max_length=50)
+    sadaratimag = models.ImageField(upload_to='main/slider',default = '')
+    mehfil  = models.OneToOneField(postrequest, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.mehfil.title
+
+class contact(models.Model):
+    contacter = models.CharField(max_length=30)

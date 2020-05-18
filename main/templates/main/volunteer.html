@@ -1,0 +1,45 @@
+{% extends 'main/basic.html' %}
+{% block body %}
+<div class="container">
+    <h3 class="mt-4">Category</h3><br>
+    <div class="row">
+        <div class="col-md-4">
+    <div class="card border-info mb-3" style="max-width: 18rem;">
+  <div class="card-header">Majlis</div>
+  <div class="card-body text-info">
+    <h5 class="card-title">Info card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+    </div></div>
+        <div class="col-md-4">
+    <div class="card border-info mb-3 " style="max-width: 18rem;">
+  <div class="card-header">Mehfil</div>
+  <div class="card-body text-info">
+    <h5 class="card-title">Info card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+ <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+    </div></div>
+        <div class="col-md-4">
+    <div class="card border-info mb-3" style="max-width: 18rem;">
+  <div class="card-header">Others</div>
+  <div class="card-body text-info">
+    <h5 class="card-title">Info card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+    </div></div>
+</div>
+    </div>
+<div class="col-md-6" style="margin:4px;">
+    <div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action active">
+    Unverified Events
+  </a>
+        {% for i in unverified %}
+  <a href="#" class="list-group-item list-group-item-action ">{{i.title}}</a>
+        {% endfor %}
+  </div>
+</div>
+{% endblock %}

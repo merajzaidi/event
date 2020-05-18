@@ -41,29 +41,71 @@
     <label for="exampleFormControlTextarea1">Description</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
   </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label>No Of Attendences</label>
+      <select class="custom-select" name = "attendences" required>
+      <option value="">Select Range</option>
+      <option value="0-250">0-250</option>
+      <option value="250-500">250-500</option>
+      <option value="500-2000">500-2000</option>
+      <option value="2000+">2000+</option>
+    </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputdate">Minjanib</label>
+      <input type="text" class="form-control" id="inputdate" name = "organiser">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputtime">Phone No.</label>
+      <input type="number" class="form-control" id="inputtime" name="phone_no">
+    </div>
+  </div>
     <div class="form-group">
     <label for="exampleFormControlFile1">Upload Any poster</label>
     <input type="file" class="form-control-file" id="exampleFormControlFile1" name="poster">
   </div>
-  <span id="divpr" class="divpr"><br></span>
+  <span id="divpr" class="divpr" > </span>
   <button type="submit" class="btn btn-primary">Load More</button>
 </form>
     </div>
 {% endblock %}
 {% block js %}
 <script>
+window.onload = window.localStorage.clear();
 function validation(){
   var x = document.forms["myForm"]["category"].value;
-  console.log(x);
+
   if (x == "mehfil"){
-  var datat = '<div class="form-group row"><label for="inputEmail3" class="col-sm-2 col-form-label">Name</label><div class="col-md-6"><input type="text" class="form-control" id="inputEmail3" name="sname"></div><label for="exampleFormControlFile1">Image</label><input type="file" class="form-control-file col-md-2" id="exampleFormControlFile1" name="si"><button type="button" class="btn btn-primary" id="add" onclick="added()">+</button></div><span id="divp"></span>';
+     count();
+
+  var datat = '<div class="form-group row"><label for="inputEmail3" class="col-sm-2 col-form-label">Name</label><div class="col-md-6"><input type="text" class="form-control" id="inputEmail3" name="sname' + localStorage.clickcount + '" required></div><label for="exampleFormControlFile1">Image</label><input type="file" class="form-control-file col-md-2" id="exampleFormControlFile1" name="si' + localStorage.clickcount + '"><button type="button" class="btn btn-primary" id="add" onclick="added()">+</button><button type="button" class="btn btn-danger mx-2" onclick="remove(1)">x</button></div><span id="divp' + localStorage.clickcount + '"></span>';
+      console.log(datat);
       document.getElementById('divpr').innerHTML = datat ;
   }
+
 }
 function added(){
-var data = '<div class="form-group row"><label for="inputEmail3" class="col-sm-2 col-form-label">Name</label><div class="col-md-6"><input type="text" class="form-control" id="inputEmail3" name="sname"></div><label for="exampleFormControlFile1">Image</label><input type="file" class="form-control-file col-md-2" id="exampleFormControlFile1" name="si"><button type="button" class="btn btn-primary" id="add" onclick="added()">+</button></div>';
-      console.log(document.getElementById('divp').innerHTML);
-      document.getElementById('divp').innerHTML = document.getElementById('divp').innerHTML + data ;
+count();
+var data = '<div class="form-group row"><label for="inputEmail3" class="col-sm-2 col-form-label">Name</label><div class="col-md-6"><input type="text" class="form-control" id="inputEmail3" name="sname' + localStorage.clickcount + '" required></div><label for="exampleFormControlFile1">Image</label><input type="file" class="form-control-file col-md-2" id="exampleFormControlFile1" name="si' + localStorage.clickcount + '"><button type="button" class="btn btn-primary" id="add" onclick="added()">+</button><button type="button" class="btn btn-danger mx-2" onclick="remove(0)">x</button></div><span id="divp' + localStorage.clickcount + '"></span>';
+      console.log(data);
+      i = localStorage.clickcount - 1
+      console.log("VAlue of i is" + i);
+      document.getElementById('divp' + i).innerHTML = data ;
+
 }
+function count(){
+  if (localStorage.clickcount){
+     localStorage.clickcount = Number(localStorage.clickcount)+1;
+     } else
+         localStorage.clickcount = 1;
+}
+function remove(x){
+  if (x==1)
+  $("#divpr").remove();
+  else
+  $("#divp"+(localStorage.clickcount-1)).remove();
+  localStorage.clickcount--;
+  }
 </script>
 {% endblock %}
