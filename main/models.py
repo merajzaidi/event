@@ -60,3 +60,6 @@ class mehfildetail(models.Model):
 
 class contact(models.Model):
     contacter = models.CharField(max_length=30)
+
+class Mehfil(models.Model):
+    pass

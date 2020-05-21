@@ -1,0 +1,27 @@
+{% extends 'main/basic.html' %}
+{% block title%}Azadari{% endblock %}
+{% block body %}
+
+<div class="container-fluid">
+    <br>
+    <h3 style="text-align:center;">Azadari Videos</h3>
+    <br>
+    {% for i in n %}
+
+    <div class="row mb-4">
+        {% for j in n %}
+            <div class="card mx-4" style="width: 18rem;">
+                <iframe src="https://www.youtube.com/embed/1exHH3VgYnM" class="card-img-top" alt="Video"></iframe>
+  <div class="card-body">
+    <h5 class="card-title">Majlis e Aza</h5>
+    <p class="card-text">Majlis -E- Wiladat -E- Imam Hussain (a.s)
+Maulana Ahmed Ali Abidi</p>
+    <a href="https://www.youtube.com/watch?time_continue=2&v=1exHH3VgYnM&feature=emb_logo" class="btn btn-primary">Watch On Youtube</a>
+  </div>
+</div>
+    {% endfor %}
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

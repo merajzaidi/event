@@ -1,0 +1,73 @@
+{% extends 'main/basic.html' %}
+{% block title %}{% endblock %}
+{% block body %}
+<div class="container my-4">
+    <h3 class="my-2">Post your Event</h3>
+<form action="#" method="post" name="myForm">
+    {% csrf_token %}
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Title/Munwaan</label>
+      <input type="text" class="form-control" id="text" name="title" value="{{eventdetail.title}}">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="category">Category</label>
+    <select class="custom-select" name = "category" onchange="validation()" required>
+      <option value="{{eventdetail.category}}">{{eventdetail.category}}</option>
+      <option value="majlis">Majlis</option>
+      <option value="mehfil">Mehfil</option>
+      <option value="others">Others</option>
+    </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputAddress">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name = "address" value="{{eventdetail.address}}">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputCity">City</label>
+      <input type="text" class="form-control" id="inputCity" name = "cityyy" value="{{eventdetail.place}}">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputdate">date</label>
+      <input type="date" class="form-control" id="inputdate" name = "date" value="{{eventdetail.date}}">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputtime">Time</label>
+      <input type="time" class="form-control" id="inputtime" name="time" value="{{eventdetail.time}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Description</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" value="{{eventdetail.desc}}"></textarea>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label>No Of Attendences</label>
+      <select class="custom-select" name = "attendences" required>
+      <option value="{{eventdetail.attendences}}">{{eventdetail.attendences}}</option>
+      <option value="0-250">0-250</option>
+      <option value="250-500">250-500</option>
+      <option value="500-2000">500-2000</option>
+      <option value="2000+">2000+</option>
+    </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputdate">Minjanib</label>
+      <input type="text" class="form-control" id="inputdate" name = "organiser" value="{{eventdetail.organiser}}">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputtime">Phone No.</label>
+      <input type="number" class="form-control" id="inputtime" name="phone_no">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="exampleFormControlFile1">Upload Any poster</label>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="poster">
+  </div>
+  <span id="divpr" class="divpr" > </span>
+  <button type="submit" class="btn btn-primary">Load More</button>
+</form>
+    </div>
+{% endblock %}

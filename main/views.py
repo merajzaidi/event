@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import slider , postrequest ,city , Shaiyar, contact
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
@@ -33,8 +35,8 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-#@login_required(login_url='/events/accounts/login/')
-@unauthenticated_user
+@login_required(login_url='/events/accounts/login/')
+#@unauthenticated_user
 def post(request):
     form = details()
     if request.method=="POST":
@@ -64,11 +66,14 @@ def post(request):
                 i=i+1
                 sname = request.POST.get('sname' + str(i), '')
                 imag = request.POST.get('si' + str(i), '')
-
-
+        #send_mail('Post Form',title,settings.EMAIL_HOST_USER,['hussainimeraj5@gmail.com'],fail_silently=False)
     return render(request, 'main/post.html',{'form':form})
 class postevent(LoginRequiredMixin, TemplateView):
     template_name = 'post.html'
+
+def eventdetail(request,post_id):
+    eventdetail=postrequest.objects.filter(post_id=post_id)
+    return render(request,'main/eventdetail.html',{'eventdetail':eventdetail[0]})
 
 def postmore(request):
     if request.method == "POST":
@@ -79,10 +84,12 @@ def postmore(request):
         qwe.save()
     return render(request, 'main/postmore.html')
 def links(request):
-    return HttpResponse("This is links")
+    n=4
+    return render(request, 'main/links.html',{'n':range(n)})
 
 def places(request):
-    return HttpResponse("This is Places")
+    n=2
+    return render(request,'main/places.html', {'n':range(n),'y':range(6)})
 
 def maulana(request):
     return HttpResponse("This is maulana")

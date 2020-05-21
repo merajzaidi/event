@@ -11,4 +11,5 @@ urlpatterns = [
     path('maulana', views.maulana, name='maulana'),
     path('contact', views.contactt, name='contact'),
     path('volunteer', views.volunteer, name='volunteer'),
+    path('eventdetail/<int:post_id>', views.eventdetail, name='eventdetail'),
 ]
