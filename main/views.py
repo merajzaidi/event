@@ -38,7 +38,6 @@ def signup(request):
 @login_required(login_url='/events/accounts/login/')
 #@unauthenticated_user
 def post(request):
-    form = details()
     if request.method=="POST":
         title = request.POST.get('title', '')
         category = request.POST.get('category', '')
@@ -66,8 +65,9 @@ def post(request):
                 i=i+1
                 sname = request.POST.get('sname' + str(i), '')
                 imag = request.POST.get('si' + str(i), '')
+        return render(request, 'main/thanks.html')
         #send_mail('Post Form',title,settings.EMAIL_HOST_USER,['hussainimeraj5@gmail.com'],fail_silently=False)
-    return render(request, 'main/post.html',{'form':form})
+    return render(request, 'main/post.html')
 class postevent(LoginRequiredMixin, TemplateView):
     template_name = 'post.html'
 
