@@ -63,3 +63,6 @@ class contact(models.Model):
 
 class Mehfil(models.Model):
     pass
+
+class Uset(AbstractBaseUser):
+    pass

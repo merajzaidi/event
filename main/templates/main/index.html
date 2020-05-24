@@ -1,4 +1,28 @@
 {% extends 'main/basic.html' %}
+{% block css %}
+  .feature-thumb {
+    border: 1px solid #f0f0f0;
+    padding: 5em 3em;
+  }
+
+  .feature-thumb span {
+    background: #3f51b5;
+    border-radius: 50px;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: bold;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .feature-thumb h3 {
+    margin: 10px 0;
+  }
+{% endblock %}
 {% block body %}
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
@@ -13,10 +37,15 @@
   </div>
 </div>
 <br>
+<center><h2>Enter the City</h2></center><br>
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-8">
 <form action="{% url 'home' %}" method="post">
     {% csrf_token %}
-    <form class="form-inline">
-<div class="form-inline mx-2 col-md-6">
+    <form class="form-row">
+<div class="form-inline mx-2 col-md-8">
         <label for="city">City</label>
     <select class="custom-select mx-2" name = "locationn" required>
       <option value="">Select Category</option>
@@ -28,6 +57,8 @@
     </div>
 </form>
     </form>
+    </div></div>
+<br><br><br>
 {% for i in content %}
 {% if i.verification %}
  <div class="container my-4">
@@ -43,7 +74,41 @@
   </div>
 </div>
 </div>
+{% else %}
 {% endif %}
 
 {% endfor %}
+     <section id="feature">
+	 <h1 style="text-align:center;">About Us</h1>
+          <div class="container">
+
+               <div class="row">
+
+                    <div class="col-md-4 col-sm-4">
+                         <div class="feature-thumb">
+                              <span>01</span>
+                              <h3>Citywise Azadari Upadtes</h3>
+                              <p>We provide you updates of every event happening in your selected cities</p>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                         <div class="feature-thumb">
+                              <span>02</span>
+                              <h3>Live Azadari & Videos</h3>
+                              <p>Watch Events Live directly from your home through our Platform.</p>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                         <div class="feature-thumb">
+                              <span>03</span>
+                              <h3>Know the Markaz Place Masjid of city</h3>
+                              <p>Get the details of Masjid Imambara in selected city and know their Salaat timming</p>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </section>
 {% endblock %}
