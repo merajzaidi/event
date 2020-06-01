@@ -30,7 +30,7 @@ EMAIL_HOST_PASSWORD = 'H@ider110'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
+AUTH_USER_MODEL = "main.User"
 ALLOWED_HOSTS = []
 
 

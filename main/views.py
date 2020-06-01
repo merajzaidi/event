@@ -9,8 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
-from .forms import Nameform,details
+from .forms import Nameform,details , UserAdminCreationForm, mehfilform
 from .decorators import unauthenticated_user, allowed_users
+
 def index(request):
     sliders = slider.objects.all()
     n = len(sliders)
@@ -27,12 +28,12 @@ def index(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserAdminCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
-        form = UserCreationForm()
+        form = UserAdminCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
 @login_required(login_url='/events/accounts/login/')
@@ -96,16 +97,26 @@ def maulana(request):
 
 def contactt(request):
     if request.method == 'POST':
-        form = Nameform(request.POST)
-        print(form)
-        if form.is_valid():
-            obj = contact()
-            obj.contacter = form.cleaned_data['your_name']
+        form1 = details(request.POST,request.FILES)
+        form2 = mehfilform(request.POST)
+        print(form1)
+        print(form2)
+        if form1.is_valid() and form2.is_valid():
+            #meh=form1.save(mehfil)
+            obj = mehfildetail()
+            obj.nizamat = form1.cleaned_data['nizamat']
+            obj.nizamimage = request.FILES['nizamimag']
+            obj.sadarat = form1.cleaned_data['sadarat']
+            obj.sadaratimag = request.FILES['sadaratimag']
+            #obj.contacter = form.cleaned_data['your_name']
+            obj.mehfil = postrequest(82)
+            #add.mehfil = meh
             obj.save()
             return HttpResponse("Submit")
     else:
-        form=Nameform()
-    return render(request, 'main/name.html',{'form':form})
+        form1 = details()
+        form2 = mehfilform()
+    return render(request, 'main/name.html',locals())
 
 @unauthenticated_user
 @allowed_users(allowed_roles=['volunteer'])
