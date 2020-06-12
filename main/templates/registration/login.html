@@ -1,5 +1,6 @@
 {% extends 'main/basic.html' %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
 {% block body %}
 <div class="container  my-4">
 <div class="card">
@@ -11,7 +12,11 @@
     {{ form|crispy }}
 
     <button type="submit" class="btn btn-outline-primary">Submit</button>
-    <a href="{% url 'signup' %}" class="btn btn-outline-danger mx-2">Signup</button></a>
+    <a href="{% url 'signup' %}" class="btn btn-outline-danger mx-2">Signup</button></a><br>
+    <p><strong>-- OR --</strong></p>
+  <a href="{% provider_login_url 'github' method='oauth2' %}">Login with GitHub</a><br>
+  <a href="{% provider_login_url 'google' method='oauth2' %}">Login with Google</a><br>
+  <a href="{% provider_login_url 'facebook' %}">Login with facebook</a><br>
 </form>
 
 </div>

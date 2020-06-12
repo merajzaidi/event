@@ -225,7 +225,10 @@ footer{
         <a class="nav-link" href="{% url 'maulana' %}">Maulana contacts</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'contact' %}">Contact No.</a>
+        <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'donate' %}">Donate</a>
       </li>
     </ul>
     {% if user.is_authenticated %}
@@ -252,7 +255,7 @@ footer{
   {% block body %}{% endblock %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <footer class="footer-distributed">
+  <footer class="footer-distributed footer">
 
 			<div class="footer-left">
           <img src="img/logo.png">

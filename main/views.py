@@ -15,7 +15,7 @@ from .decorators import unauthenticated_user, allowed_users
 def index(request):
     sliders = slider.objects.all()
     n = len(sliders)
-    cityy = city.objects.values('location','id')
+    cityy = city.objects.all().order_by('location')
     print(cityy)
     if request.method == 'POST':
         cit = request.POST.get('locationn')
@@ -127,3 +127,7 @@ def volunteer(request):
     unverified = postrequest.objects.filter(verification='False')
     all = {'majlis': majlis, 'mehfil':mehfil, 'others':others, 'unverified': unverified}
     return render(request, 'main/volunteer.html', all)
+
+@login_required
+def home(request):
+    return render(request, 'main/home.html')
